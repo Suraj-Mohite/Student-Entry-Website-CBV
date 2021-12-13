@@ -1,0 +1,15 @@
+{% extends 'FBV_app/home.html'%}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-8 offset-2">
+        <h4 class="text-center alert alert-info " >Update Student Information</h4>
+        <form action="{% url 'updatedata' id %}" method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+            {{form}}
+            <input type="submit" class="btn btn-success mt-5" value="Submit">
+            <a href="{% url 'display' %}" class="btn btn-primary mt-5">Back to Home</a>
+        </form>
+    </div>
+</div>
+{% endblock content %}

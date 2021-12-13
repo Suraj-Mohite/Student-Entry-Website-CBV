@@ -1,0 +1,55 @@
+{% extends 'FBV_app/home.html'%}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <h4 class="text-center alert alert-info " >Add Student</h4>
+        <form action="" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+                {{form.as_p}}
+            <input type="submit" class='btn btn-success' value="Add">
+        </form>
+    </div>
+
+    <div class="col-sm-7 offset-1">
+        <h4 class="text-center alert alert-info " >Show Students</h4>
+        {% if std %}
+        <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for st in std %}
+                  <tr>
+                    <th scope="row">{{st.id}}</th>
+                    <td><img src="{{st.image.url}}" alt="" class="rounded float-start" width="75px" height="75px"></td>
+                    <td>{{st.name}}</td>
+                    <td>{{st.email}}</td>
+                    <td>{{st.mob_number}}</td>
+                    <td>
+                        <a href="{% url 'updatedata' st.id %}"  class="btn btn-warning btn-sm">Edit</a>
+                    </td>
+                    <td>
+                        <form action="{% url 'deletedata' st.id %}" method="POST" class="d-inline">
+                            {%csrf_token%}
+                            <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+                        </form>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+          </table>
+        {% else %}
+            <h1 class="text-center alert alert-warning mt-5">No Data Available</h1>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
